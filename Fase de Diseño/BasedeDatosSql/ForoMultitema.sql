@@ -22,7 +22,7 @@ INSERT INTO categoria VALUES(null,'Temas varios');
 CREATE TABLE publicacion (
     id_publicacion INT AUTO_INCREMENT PRIMARY KEY,
     titulo         VARCHAR(200) NOT NULL,
-    contenido      TEXT         NOT NULL,
+    contenido      VARCHAR(200) NOT NULL,
     fecha_creacion DATETIME     NOT NULL,
     id_usuario     INT          NOT NULL,
     id_categoria   INT          NOT NULL,
