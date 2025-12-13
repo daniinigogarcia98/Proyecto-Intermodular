@@ -19,22 +19,22 @@ CREATE TABLE Categoria (
 -- Categorías iniciales
 INSERT INTO categoria VALUES (null,'Informatica');
 INSERT INTO categoria VALUES(null,'Temas varios');
-CREATE TABLE publicacion (
+CREATE TABLE Publicacion (
     id_publicacion INT AUTO_INCREMENT PRIMARY KEY,
     titulo         VARCHAR(200) NOT NULL,
-    contenido      VARCHAR(200) NOT NULL,
-    fecha_creacion DATETIME     NOT NULL,
-    id_usuario     INT          NOT NULL,
-    id_categoria   INT          NOT NULL,
-    FOREIGN KEY (id_usuario)
-        REFERENCES usuario(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (id_categoria)
-        REFERENCES categoria(id_categoria)
-        ON DELETE RESTRICT
-        ON UPDATE CASCADE
-)engine InnoDB;
+    contenido      TEXT NOT NULL, 
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    id_usuario     INT NOT NULL,
+    id_categoria   INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_categoria) REFERENCES Categoria(idCategoria)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    INDEX idx_usuario (id_usuario),
+    INDEX idx_categoria (id_categoria),
+    INDEX idx_fecha (fecha_creacion)
+) ENGINE = InnoDB;
+
 
 CREATE TABLE comentario (
     id_comentario  INT AUTO_INCREMENT PRIMARY KEY,
