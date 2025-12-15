@@ -1,0 +1,121 @@
+ /* --- FONDO AWS STYLE --- */
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c507b);
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* --- HEADER --- */
+    .header-bg {
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-desktop {
+      background-color: #0066CC;
+      border-color: #0066CC;
+      color: white;
+    }
+
+    .btn-desktop:hover {
+      background-color: #0052a3;
+      border-color: #0052a3;
+    }
+
+    .btn-success-desktop {
+      background-color: #32CD32;
+      border-color: #32CD32;
+      color: white;
+    }
+
+    .btn-warning-desktop {
+      background-color: #FFA500;
+      border-color: #FFA500;
+      color: black;
+    }
+
+    .text-link {
+      color: #00BFFF !important;
+      text-decoration: underline !important;
+    }
+
+    .avatar {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    /* Ícono hamburguesa blanco */
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+
+    /* --- TARJETAS --- */
+    .infoforo-card {
+      background: rgba(30, 30, 40, 0.7);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      height: 100%;
+      transition: all 0.3s ease;
+      border: none;
+      padding: 1rem;
+      color: white;
+    }
+
+    .infoforo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 8px 20px rgba(0,0,0,0.4),
+        0 0 20px #39ff14;
+    }
+
+    .infoforo-card img {
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+
+    .infoforo-card .card-title {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .infoforo-card .card-text {
+      color: #cccccc;
+      line-height: 1.5;
+    }
+
+    /* --- BÚSQUEDA --- */
+    .search-box {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 500px;
+      color: white;
+      backdrop-filter: blur(5px);
+    }
+
+    .search-box::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Menú móvil */
+    .mobile-menu {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2rem;
+      color: #aaaaaa;
+    }
