@@ -35,7 +35,47 @@
       border-color: #FFA500;
       color: black;
     }
+ .btn-desktop {
+      background-color: #0066CC;
+      border-color: #0066CC;
+      color: white;
+    }
 
+    .btn-success-desktop {
+      background-color: #32CD32;
+      border-color: #32CD32;
+      color: white;
+    }
+
+    .btn-warning-desktop {
+      background-color: #FFA500;
+      border-color: #FFA500;
+      color: black;
+    }
+
+    /* Botones de autenticación */
+    .btn-login {
+      background-color: transparent;
+      border: 1px solid #00BFFF;
+      color: #00BFFF;
+    }
+
+    .btn-login:hover {
+      background-color: rgba(0, 191, 255, 0.1);
+    }
+
+    .btn-register {
+      background-color: #39ff14;
+      border: 1px solid #39ff14;
+      color: #0f2027;
+      font-weight: 600;
+    }
+
+    .btn-register:hover {
+      background-color: #2fff00;
+      transform: translateY(-2px);
+      box-shadow: 0 0 12px #39ff14;
+    }
     .text-link {
       color: #00BFFF !important;
       text-decoration: underline !important;
