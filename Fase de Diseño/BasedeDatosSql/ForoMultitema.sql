@@ -1,53 +1,66 @@
-drop database if exists foromultitema;
-create database foromultitema;
-use foromultitema;
+DROP DATABASE IF EXISTS foromultitema;
+CREATE DATABASE foromultitema;
+USE foromultitema;
 
-CREATE TABLE Usuario (
-    id           INT PRIMARY KEY AUTO_INCREMENT,
-    nombre       VARCHAR(100) NOT NULL,
-    email        VARCHAR(150) NOT NULL UNIQUE,
-	passwd       blob not null,
-    rol          ENUM('R','A') NOT NULL -- R para Registrado y A para Admin
-)engine InnoDB;
--- Usuario administrador 
-INSERT INTO usuario VALUES (null,'Administrador', 'admin@admin.com', sha2('admin123',512), 'Admin');
+-- Tabla usuarios
+CREATE TABLE usuarios (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    rol ENUM('R','A') NOT NULL DEFAULT 'R',
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+) ENGINE=InnoDB;
 
-CREATE TABLE Categoria (
-    idCategoria  INT PRIMARY KEY AUTO_INCREMENT,
-    nombre       VARCHAR(100) NOT NULL
-) engine InnoDB;
--- Categorías iniciales
-INSERT INTO categoria VALUES (null,'Informatica');
-INSERT INTO categoria VALUES(null,'Temas varios');
-CREATE TABLE Publicacion (
-    id_publicacion INT AUTO_INCREMENT PRIMARY KEY,
-    titulo         VARCHAR(200) NOT NULL,
-    contenido      TEXT NOT NULL, 
-    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    id_usuario     INT NOT NULL,
-    id_categoria   INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+-- Usuario administrador
+INSERT INTO usuarios (nombre, email, password, rol, created_at)
+VALUES ('Administrador', 'admin@admin.com', SHA2('admin123',512), 'A', NOW());
+
+-- Tabla categorias
+CREATE TABLE categorias (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+) ENGINE=InnoDB;
+
+INSERT INTO categorias (nombre) VALUES ('Informatica');
+INSERT INTO categorias (nombre) VALUES ('Temas varios');
+
+-- Tabla publicaciones
+CREATE TABLE publicaciones (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(200) NOT NULL,
+    contenido TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL,
+    usuario_id BIGINT UNSIGNED NOT NULL,
+    categoria_id BIGINT UNSIGNED NOT NULL,
+
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_categoria) REFERENCES Categoria(idCategoria)
+
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
         ON DELETE RESTRICT ON UPDATE CASCADE,
-    INDEX idx_usuario (id_usuario),
-    INDEX idx_categoria (id_categoria),
-    INDEX idx_fecha (fecha_creacion)
-) ENGINE = InnoDB;
 
+    INDEX (usuario_id),
+    INDEX (categoria_id),
+    INDEX (created_at)
+) ENGINE=InnoDB;
 
-CREATE TABLE comentario (
-    id_comentario  INT AUTO_INCREMENT PRIMARY KEY,
-    contenido      TEXT     NOT NULL,
-    fecha          DATETIME NOT NULL,
-    id_usuario     INT      NOT NULL,
-    id_publicacion INT      NOT NULL,
-    FOREIGN KEY (id_usuario)
-        REFERENCES usuario(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (id_publicacion)
-        REFERENCES publicacion(id_publicacion)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-)engine InnoDB;
+-- Tabla comentarios
+CREATE TABLE comentarios (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    contenido TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL,
+    usuario_id BIGINT UNSIGNED NOT NULL,
+    publicacion_id BIGINT UNSIGNED NOT NULL,
+
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+
+    FOREIGN KEY (publicacion_id) REFERENCES publicaciones(id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
