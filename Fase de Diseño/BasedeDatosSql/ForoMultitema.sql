@@ -8,12 +8,15 @@ CREATE TABLE usuarios (
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    rol ENUM('R','A') NOT NULL DEFAULT 'R',
+    rol ENUM('U','A') NOT NULL DEFAULT 'U',
+    -- U = Usuario común, A = Administrador
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
 ) ENGINE=InnoDB;
 
--- Usuario administrador
+-- Usuario administrador 
+-- En laravel se recomienda usar bcrypt, pero para este ejemplo usaremos SHA2 con 512 bits
+-- esto no es seguro para producción, solo para fines de demostración
 INSERT INTO usuarios (nombre, email, password, rol, created_at)
 VALUES ('Administrador', 'admin@admin.com', SHA2('admin123',512), 'A', NOW());
 
