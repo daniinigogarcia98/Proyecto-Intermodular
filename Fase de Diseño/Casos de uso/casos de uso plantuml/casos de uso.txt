@@ -1,0 +1,70 @@
+@startuml
+' Configuración de colores y estilo
+skinparam backgroundColor #EEEBDC
+skinparam usecase {
+    BackgroundColor #FFF8DC
+    BorderColor #333333
+    ArrowColor #333333
+}
+skinparam actor {
+    BackgroundColor #FFFFFF
+    BorderColor #333333
+}
+
+title Diagrama de Casos de Uso - Foro Multitemático
+
+left to right direction
+
+actor "Usuario Visitante" as Visitante
+
+package "Foro MultiTematico" {
+
+    ' Casos de uso básicos (Lectura)
+    usecase "CU01 Iniciar Sesión" as UC_Login
+    usecase "CU02 Registrarse" as UC_Register
+    usecase "CU03 Ver Categorías" as UC_VerCats
+    usecase "CU04 Ver Publicaciones" as UC_VerPosts
+    usecase "CU05 Buscar Publicaciones" as UC_Buscar
+    
+
+    ' Casos de uso de Usuario Registrado
+    usecase "CU06 Crear Publicación" as UC_Crear
+    usecase "CU07 Responder Publicación" as UC_Responder
+    usecase "CU08 Editar Publicación Propia" as UC_EditPropia
+    usecase "CU09 Eliminar Publicación Propia" as UC_DelPropia
+    usecase "CU10 Editar su Perfil" as UC_Perfil
+
+    ' Casos de uso de Administrador
+    usecase "CU11 Gestionar Usuarios" as UC_GestUsers
+    usecase "CU12 Gestionar Categorías" as UC_GestCats
+    usecase "CU13 Ver Reportes" as UC_VerReportes
+
+    ' Relaciones del Visitante
+    Visitante --> UC_Login
+    Visitante --> UC_Register
+    Visitante --> UC_VerCats
+    Visitante --> UC_VerPosts
+    Visitante --> UC_Buscar
+
+    ' Usuario Registrado hereda de Visitante
+    ' (Esto significa que hace todo lo de arriba + lo siguiente)
+    actor "Usuario Registrado" as Registrado
+    Registrado --|> Visitante
+
+    Registrado --> UC_Crear
+    Registrado --> UC_Responder
+    Registrado --> UC_EditPropia
+    Registrado --> UC_DelPropia
+    Registrado --> UC_Perfil
+
+    ' Administrador hereda de Registrado
+    ' (Esto significa que hace todo lo de arriba + poderes de admin)
+    actor "Usuario Administrador" as Admin
+    Admin --|> Registrado
+
+    Admin --> UC_GestUsers
+    Admin --> UC_GestCats
+    Admin --> UC_VerReportes
+
+}
+@enduml

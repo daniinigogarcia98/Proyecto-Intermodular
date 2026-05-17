@@ -1,0 +1,27 @@
+@startuml
+title UML Sequence Diagram - Crear Publicación
+
+participant "Usuario Registrado" as Usuario
+participant "PantallaForo" as Pantalla
+participant "ControladorPublicacion" as Controlador
+participant "BasedeDatos" as BD
+participant "Sistema" as Sis
+
+Usuario -> Pantalla: 1: CrearPublicacion()
+Pantalla -> Controlador: 1.1: ValidarDatos(titulo,contenido,Categoria)
+Controlador -> BD: 1.1.1: VerificarCategoria(idCategoria)
+BD --> Controlador: 1.1.1.1: ResultadoVerificacion
+
+alt datos invalidos o categoria inexistente
+    Controlador -> Pantalla: 1.1.1.1.1: ErrorValidacion(Mensaje)
+    Pantalla -> Usuario: 1.1.1.1.1.1: MostrarError()
+else datos validos
+    Controlador -> BD: 1.1.1.2: InsertarPublicacion(datos)
+    BD --> Controlador: 1.1.1.2.1: IdPublicacion
+    Controlador -> Sis: 1.1.1.2.1.1: RegistrarAccion("Crear Publicacion",IdPublicacion)
+    Sis --> Controlador: 1.1.1.2.1.2: Confirmacion(idPublicacion)
+    Controlador -> Pantalla: 1.1.1.2.1.2.1: Confirmacion(idPublicacion)
+    Pantalla -> Usuario: 1.1.1.2.1.2.1: MostrarPublicacionNueva()
+end
+
+@enduml

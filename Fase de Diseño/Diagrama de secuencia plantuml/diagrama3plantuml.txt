@@ -1,0 +1,34 @@
+@startuml
+title UML Sequence Diagram - Editar Publicación
+
+participant "Usuario Registrado" as Usuario
+participant "PantallaForo" as Pantalla
+participant "ControladorPublicacion" as Controlador
+participant "BasedeDatos" as BD
+participant "Sistema" as Sis
+
+Usuario -> Pantalla: 1: SolicitarEdicion(idPublicacion)
+Pantalla -> Controlador: 1.1: VerificarPropiedad(idPublicacion,idUsuario)
+Controlador -> BD: 1.1.1: ConsultarAutor(idPublicacion)
+BD --> Controlador: 1.1.1.1: IdAutor
+
+alt Usuario es Autor
+    Controlador -> BD: 1.2: ObtenerDatosEditables(idPublicacion)
+    BD --> Controlador: 1.2.1: DatosPublicacion
+    Controlador -> Pantalla: 1.3: MostrarFormularioEdicion(datos)
+    Pantalla -> Usuario: 1.3.1: MostrarFormulario()
+    
+    Usuario -> Pantalla: 2: GuardarCambios(idPublicacion,nuevosDatos)
+    Pantalla -> Controlador: 2.1: ActualizarPublicacion(id,datos)
+    Controlador -> BD: 2.1.1: UpdatePublicacion(datos)
+    BD --> Controlador: 2.1.1.1: ResultadoActualizacion
+    Controlador -> Sis: 2.1.2: RegistrarAccion('Editar')
+    Sis --> Controlador: 2.1.2.1: ConfirmacionRegistro
+    Controlador -> Pantalla: 2.1.3: ConfirmacionActualizacion()
+    Pantalla -> Usuario: 2.1.3.1: MostrarPublicacionActualizada()
+else Usuario NO es Autor
+    Controlador -> Pantalla: 1.4: ErrorPermiso()
+    Pantalla -> Usuario: 1.4.1: MostrarError('No autorizado')
+end
+
+@enduml

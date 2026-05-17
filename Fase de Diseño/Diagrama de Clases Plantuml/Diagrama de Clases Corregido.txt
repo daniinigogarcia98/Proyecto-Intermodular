@@ -1,0 +1,66 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class Usuario {
+    -id: int
+    -nombre: string
+    -email: string
+    -contraseña: string
+    +iniciarSesion()
+    +registrarse()
+    +verCategorias()
+    +verPublicaciones()
+}
+
+class "Usuario Registrado" as UsuarioReg {
+    +crearPublicacion()
+    +responderPublicacion()
+    +editarPublicacion()
+    +eliminarPublicacion()
+    +editarPerfil()
+    +gestionarPublicaciones()
+}
+
+class Administrador {
+    +gestionarUsuarios()
+    +eliminarUsuario()
+    +gestionarPublicaciones()
+}
+
+class Categoria {
+    -idCategoria: int
+    -nombre: string
+    +listarPublicaciones()
+}
+
+class Publicacion {
+    -idPublicacion: int
+    -titulo: string
+    -contenido: string
+    -fechaCreacion: date
+    -idUsuario: int
+    -idCategoria: int
+    +crear()
+    +editar()
+    +eliminar()
+    +responder()
+}
+
+class Comentario {
+    -idComentario: int
+    -contenido: string
+    -fecha: Date
+    -idUsuario: int
+    -idPublicacion: int
+    +responder()
+}
+
+Usuario <|-- UsuarioReg
+Usuario <|-- Administrador
+
+UsuarioReg "1" -- "1..*" Publicacion : crea >
+Categoria "1" -- "0..*" Publicacion : contiene >
+Publicacion "1" -- "0..*" Comentario : tiene >
+
+@enduml

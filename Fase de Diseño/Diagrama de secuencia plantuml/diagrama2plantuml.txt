@@ -1,0 +1,32 @@
+@startuml
+title UML Sequence Diagram - Responder Publicación
+
+participant "Usuario Registrado" as Usuario
+participant "PantallaForo" as Pantalla
+participant "ControladorRespuestas" as Controlador
+participant "BasedeDatos" as BD
+participant "Sistema" as Sis
+
+Usuario -> Pantalla: 1: VerPublicacion(idPublicacion)
+Pantalla -> Controlador: 1.1: ObtenerDetalles(idPublicacion)
+Controlador -> BD: 1.1.1: ConsultarPublicacion(idPublicacion)
+BD --> Controlador: 1.1.1.1: DatosPublicacion
+Controlador -> Pantalla: 1.2: MostrarFormularioRespuesta()
+Pantalla -> Usuario: 1.2.1: MostrarFormulario()
+
+Usuario -> Pantalla: 2: EnviarRespuesta(texto,idPadre)
+Pantalla -> Controlador: 2.1: ValidarRespuesta(texto)
+
+alt texto valido
+    Controlador -> BD: 2.1.1: InsertarRespuesta(datos)
+    BD --> Controlador: 2.1.1.1: IdRespuesta
+    Controlador -> Sis: 2.1.2: RegistrarAccion('Responder',IdRespuesta)
+    Sis --> Controlador: 2.1.2.1: ConfirmacionRegistro
+    Controlador -> Pantalla: 2.1.3: Confirmacion(idRespuesta)
+    Pantalla -> Usuario: 2.1.3.1: MostrarRespuestaNueva()
+else texto vacio o invalido
+    Controlador -> Pantalla: 2.1.4: ErrorValidacion(Mensaje)
+    Pantalla -> Usuario: 2.1.4.1: MostrarError()
+end
+
+@enduml
