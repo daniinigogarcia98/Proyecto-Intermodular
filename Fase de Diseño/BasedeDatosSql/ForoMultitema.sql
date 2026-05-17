@@ -18,7 +18,7 @@ CREATE TABLE usuarios (
 -- En laravel se recomienda usar bcrypt, pero para este ejemplo usaremos SHA2 con 512 bits
 -- esto no es seguro para producción, solo para fines de demostración
 INSERT INTO usuarios (nombre, email, password, rol, created_at)
-VALUES ('Administrador', 'admin@admin.com', SHA2('admin123',512), 'A', NOW());
+VALUES ('Administrador', 'admin@admin.com', SHA2('admin1234',512), 'A', NOW());
 
 -- Tabla categorias
 CREATE TABLE categorias (
